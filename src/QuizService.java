@@ -25,12 +25,13 @@ public class QuizService {
             System.out.println(quiz.getQuestion());
             List<String> bogi = quiz.getBogi();
             for (int i = 0; i < bogi.size(); i++) {
-                System.out.println(bogi.get(i));
+                System.out.print(bogi.get(i));
             }
 
             int userAnswerIndex = -1;
 
             while(true) {
+                System.out.println();
                 System.out.println("-정답: ");
 
                 try {
@@ -56,20 +57,18 @@ public class QuizService {
             }
             System.out.println();
         }
-
+        printUserAnswers();
+        System.out.println();
         System.out.println("당신 응답 합계 : " + totalScore + "점");
         System.out.println("학점은 F 입니다.");
-
-        printUserAnswers();
-
     }
 
     public void printUserAnswers() {
         for (int i = 0; i < quizzes.size(); i++) {
             Quiz quiz = quizzes.get(i);
             int userAnswerIndex = userAnswers.get(i);
-            String userAnswer = quiz.getBogi().get(userAnswerIndex);
-            System.out.println("answer: " + userAnswer);
+            // String userAnswer = quiz.getBogi().get(userAnswerIndex);
+            System.out.print((i + 1) + "번: " + userAnswerIndex + " ");
         }
     }
 }
