@@ -5,10 +5,12 @@ import java.util.Scanner;
 public class QuizService {
 
     private List<Quiz> quizzes;
+    private List<Integer> userAnswers;
     private Scanner scanner;
 
     public QuizService() {
         this.quizzes = new ArrayList<>();
+        this.userAnswers = new ArrayList<>();
         this.scanner = new Scanner(System.in);
     }
 
@@ -26,15 +28,48 @@ public class QuizService {
                 System.out.println(bogi.get(i));
             }
 
-            System.out.println("-정답: ");
-            int userAnswerIndex = scanner.nextInt();
+            int userAnswerIndex = -1;
+
+            while(true) {
+                System.out.println("-정답: ");
+
+                try {
+                    userAnswerIndex = scanner.nextInt() -1;
+
+                    if(userAnswerIndex < 0 || userAnswerIndex >= bogi.size()) {
+                        System.out.println("Invalid Choice.");
+                    } else {
+                        break;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid Input.");
+                    scanner.next();
+                }
+            }
+
+            userAnswers.add(userAnswerIndex);
 
             if (quiz.checkAnswer(userAnswerIndex)) {
                 totalScore += quiz.getScore();
+            } else {
+                System.out.println("틀렸습니다.");
             }
             System.out.println();
         }
+
         System.out.println("당신 응답 합계 : " + totalScore + "점");
         System.out.println("학점은 F 입니다.");
+
+        printUserAnswers();
+
+    }
+
+    public void printUserAnswers() {
+        for (int i = 0; i < quizzes.size(); i++) {
+            Quiz quiz = quizzes.get(i);
+            int userAnswerIndex = userAnswers.get(i);
+            String userAnswer = quiz.getBogi().get(userAnswerIndex);
+            System.out.println("answer: " + userAnswer);
+        }
     }
 }
